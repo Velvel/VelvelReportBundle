@@ -1,0 +1,21 @@
+{
+    "name": "velvel/report-bundle",
+    "type": "symfony-bundle",
+    "description": "Online database report generator for Symfony2",
+    "keywords": ["doctrine2", "report", "query", "query builder"],
+    "homepage": "https://github.com/Velvel/VelvelReportBundle",
+    "license": "LGPL",
+    "authors": [
+        { "name": "r1pp3rj4ck", "email": "attila.bukor@gmail.com" }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "dev-master",
+        "doctrine/orm": "dev-master",
+        "twig/twig": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "Velvel\\ReportBundle": "" }
+    },
+    "target-dir": "Velvel/ReportBundle"
+}

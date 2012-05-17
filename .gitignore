@@ -11,6 +11,11 @@ web/bundles/*
 # Configuration files
 app/config/parameters.ini
 
+# Composer
+composer.phar
+composer.lock
+vendor/
+
 # IDE files
 .idea/
 .nbproject/
