@@ -19,28 +19,30 @@
 
 namespace Velvel\ReportBundle\Form;
 
+use Symfony\Component\Validator\Constraints\Collection;
+
 /**
  * Form builder
  *
  * @author r1pp3rj4ck <attila.bukor@gmail.com>
  */
-abstract class FormBuilder implements FormBuilderInterface
+class FormBuilder implements FormBuilderInterface
 {
     /**
-     * @var \Symfony\Component\Form\FormBuilder
+     * @var \Symfony\Component\Form\FormFactoryInterface
      */
-    private $formBuilder;
+    private $formFactory;
 
     /**
      * Constructor
      *
-     * @param \Symfony\Component\Form\FormBuilder $formBuilder Form builder
+     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory Form factory
      *
-     * @author r1pp3rj4ck <attila.bukor@gmail.com>
+     * @author   r1pp3rj4ck <attila.bukor@gmail.com>
      */
-    public function __construct(\Symfony\Component\Form\FormBuilder $formBuilder)
+    public function __construct(\Symfony\Component\Form\FormFactoryInterface $formFactory)
     {
-        $this->formBuilder = $formBuilder;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -53,8 +55,18 @@ abstract class FormBuilder implements FormBuilderInterface
      */
     public function getForm(array $parameters)
     {
-        $form     = $this->formBuilder;
-        $formData = array();
+        $formData        = array();
+        $validationArray = array();
+        foreach ($parameters as $key => $value) {
+            if (isset($value['value'])) {
+                $formData[$key] = $value['value'];
+            }
+            if (isset($value['validation'])) {
+                $validationArray = $value['validation'];
+            }
+        }
+        $validationConstraint = new Collection($validationArray);
+        $form = $this->formFactory->createBuilder('form', $formData, array('validation_constraint' => $validationConstraint));
 
         foreach ($parameters as $key => $value) {
             if (isset($value['options'])) {
@@ -63,11 +75,7 @@ abstract class FormBuilder implements FormBuilderInterface
             else {
                 $form->add($key, $value['type']);
             }
-
-            $formData[$key] = $value['value'];
         }
-
-        $form->setData($formData);
 
         return $form->getForm();
     }

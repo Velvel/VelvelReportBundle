@@ -94,7 +94,7 @@ abstract class BaseReportBuilder implements ReportBuilderInterface
      *      $queryBuilder
      *          ->select('f')
      *          ->from('Foo', 'f')
-     *          ->where($queryBuilder->expr()->gt('f.bar', :min_bar));
+     *          ->where($queryBuilder->expr()->gt('f.bar', ':min_bar'));
      * </code>
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Doctrine ORM query builder
@@ -115,6 +115,7 @@ abstract class BaseReportBuilder implements ReportBuilderInterface
      *                  // array to be passed to the form type
      *                  'label' => 'Min. bar',
      *              ),
+     *              'validation' => new Date(),
      *          ),
      *      );
      *
