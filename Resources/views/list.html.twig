@@ -1,0 +1,3 @@
+{% for key,report in reports %}
+<a href="{{ url('velvel_report_show', {'reportId':key}) }}">{{ report.name }}</a>
+{% endfor %}

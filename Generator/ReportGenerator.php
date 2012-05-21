@@ -101,6 +101,22 @@ class ReportGenerator
     }
 
     /**
+     * Gets modifiers
+     *
+     * @param string $reportId Report ID
+     *
+     * @return array
+     *
+     * @author r1pp3rj4ck <attila.bukor@gmail.com>
+     */
+    public function getModifiers($reportId)
+    {
+        $builder = $this->getBuilder($reportId);
+
+        return $builder->getModifiers();
+    }
+
+    /**
      * Gets report types
      *
      * @return array

@@ -40,6 +40,11 @@ abstract class BaseReportBuilder implements ReportBuilderInterface
     private $parameters;
 
     /**
+     * @var array
+     */
+    private $modifiers;
+
+    /**
      * Constructor
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Doctrine ORM Query builder
@@ -50,6 +55,7 @@ abstract class BaseReportBuilder implements ReportBuilderInterface
     {
         $this->queryBuilder = $queryBuilder;
         $this->parameters   = $this->configureParameters();
+        $this->modifiers    = $this->configureModifiers();
     }
 
     /**
@@ -71,7 +77,6 @@ abstract class BaseReportBuilder implements ReportBuilderInterface
         else {
             throw new InvalidReportQueryException('Only SELECT statements are valid');
         }
-        $this->variables = $this->configureVariables();
         return $query;
     }
 
@@ -88,13 +93,27 @@ abstract class BaseReportBuilder implements ReportBuilderInterface
     }
 
     /**
+     * Gets modifiers
+     *
+     * @return array
+     *
+     * @author r1pp3rj4ck
+     */
+    public function getModifiers()
+    {
+        return $this->modifiers;
+    }
+
+    /**
      * Configures the query builder
      *
      * <code>
-     *      $entityManager
-     *          ->select('f')
+     *      $queryBuilder
+     *          ->select('f.length')
      *          ->from('Foo', 'f')
-     *          ->where($entityManager->expr()->gt('f.bar', ':min_bar'));
+     *          ->where($queryBuilder->expr()->gt('f.bar', ':min_bar'));
+     *
+     *      return $queryBuilder;
      * </code>
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Doctrine ORM query builder
@@ -127,19 +146,40 @@ abstract class BaseReportBuilder implements ReportBuilderInterface
     abstract protected function configureParameters();
 
     /**
+     * Configures modifiers
+     *
+     * <code>
+     *      $modifiers = array(
+     *          'length' => array(
+     *              'method' => 'format',
+     *              'params' => array(
+     *                  'H:i;s'
+     *              ),
+     *          ),
+     *      );
+     *
+     *      return $modifiers;
+     *
+     * </code>
+     *
+     * @return array
+     */
+    abstract protected function configureModifiers();
+
+    /**
      * Sets parameters for the query
      *
-     * @param \Doctrine\ORM\Query $query     Query to be set parameters on
-     * @param array               $variables Variables
+     * @param \Doctrine\ORM\Query $query      Query to be set parameters on
+     * @param array               $parameters Variables
      *
      * @return \Doctrine\ORM\Query
      *
      * @author r1pp3rj4ck <attila.bukor@gmail.com>
      */
-    private function setParameters(\Doctrine\ORM\Query $query, array $variables)
+    private function setParameters(\Doctrine\ORM\Query $query, array $parameters)
     {
-        foreach ($variables as $name => $var) {
-            $query->setParameter($name, $var['value']);
+        foreach ($parameters as $name => $param) {
+            $query->setParameter($name, $param['value']);
         }
 
         return $query;

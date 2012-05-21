@@ -1,0 +1,31 @@
+<form action="{{ url('velvel_report_show', {'reportId':app.request.attributes.get('reportId')}) }}" method="POST">
+    {{ form_widget(form) }}
+    <input type="submit" value="{% trans from 'VelvelReportBundle' %}form.submit{% endtrans %}"/>
+</form>
+
+{% if result.0 is defined %}
+<table>
+    <thead>
+    <tr>
+        {% for key,value in result.0 %}
+        <th>
+            {{ key }}
+        </th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in result %}
+    <tr>
+        {% for value in row %}
+        <td>
+            {{ value }}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+{% trans from 'VelvelReportBundle' %}no_result{% endtrans %}
+{% endif %}

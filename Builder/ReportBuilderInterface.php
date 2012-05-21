@@ -35,4 +35,11 @@ interface ReportBuilderInterface
      * @return array
      */
     function getParameters();
+
+    /**
+     * Gets modifiers
+     *
+     * @return array
+     */
+    function getModifiers();
 }
