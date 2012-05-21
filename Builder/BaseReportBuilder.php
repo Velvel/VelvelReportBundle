@@ -91,10 +91,10 @@ abstract class BaseReportBuilder implements ReportBuilderInterface
      * Configures the query builder
      *
      * <code>
-     *      $queryBuilder
+     *      $entityManager
      *          ->select('f')
      *          ->from('Foo', 'f')
-     *          ->where($queryBuilder->expr()->gt('f.bar', ':min_bar'));
+     *          ->where($entityManager->expr()->gt('f.bar', ':min_bar'));
      * </code>
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Doctrine ORM query builder

@@ -23,12 +23,33 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Definition\Processor;
 
+/**
+ * DIC extension
+ *
+ * @author r1pp3rj4ck <attila.bukor@gmail.com>
+ */
 class VelvelReportExtension extends Extension
 {
+    /**
+     * Loads configurations
+     *
+     * @param array                                                   $configs   Configurations
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container Container
+     *
+     * @author r1pp3rj4ck <attila.bukor@gmail.com>
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('form.xml');
+        $loader->load('generator.xml');
+
+        $configuration = new Configuration();
+        $processor     = new Processor();
+        $config        = $processor->processConfiguration($configuration, $configs);
+
+        $container->setParameter('velvel.report.configuration.reports', $config['reports']);
     }
 }
