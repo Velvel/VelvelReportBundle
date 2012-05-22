@@ -39,10 +39,11 @@ class ReportController extends Controller
     public function listAction()
     {
         $generator = $this->container->get('velvel.report.generator');
+        $template  = $generator->getListTemplate();
 
         $reports = $generator->getReportTypes();
 
-        return $this->render('VelvelReportBundle::list.html.twig', array('reports' => $reports));
+        return $this->render($template, array('reports' => $reports));
     }
 
     /**
@@ -58,6 +59,7 @@ class ReportController extends Controller
     public function showAction(Request $request, $reportId)
     {
         $generator = $this->container->get('velvel.report.generator');
+        $template  = $generator->getShowTemplate();
 
         $query = $generator->getQuery($reportId);
 
@@ -84,7 +86,7 @@ class ReportController extends Controller
             }
         }
 
-        return $this->render('VelvelReportBundle::show.html.twig', array('form'   => $form->createView(),
-                                                                         'result' => $result));
+        return $this->render($template, array('form'   => $form->createView(),
+                                              'result' => $result));
     }
 }

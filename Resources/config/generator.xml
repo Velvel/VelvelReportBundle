@@ -9,6 +9,8 @@
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
             <argument type="service" id="velvel.report.form"/>
             <argument>%velvel.report.configuration.reports%</argument>
+            <argument>%velvel.report.configuration.show_template%</argument>
+            <argument>%velvel.report.configuration.list_template%</argument>
         </service>
     </services>
 

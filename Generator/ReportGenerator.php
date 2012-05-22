@@ -52,20 +52,34 @@ class ReportGenerator
     private $validInterface;
 
     /**
+     * @var string
+     */
+    private $showTemplate;
+
+    /**
+     * @var string
+     */
+    private $listTemplate;
+
+    /**
      * Constructor
      *
      * @param \Doctrine\ORM\EntityManager           $entityManager Entity manager
      * @param \Velvel\ReportBundle\Form\FormBuilder $formBuilder   Form builder
      * @param array                                 $reports       Reports
+     * @param string                                $showTemplate  Show template
+     * @param string                                $listTemplate  List template
      *
      * @author r1pp3rj4ck <attila.bukor@gmail.com>
      */
-    public function __construct(EntityManager $entityManager, FormBuilder $formBuilder, array $reports)
+    public function __construct(EntityManager $entityManager, FormBuilder $formBuilder, array $reports, $showTemplate, $listTemplate)
     {
         $this->entityManager  = $entityManager;
         $this->formBuilder    = $formBuilder;
         $this->validInterface = "Velvel\\ReportBundle\\Builder\\ReportBuilderInterface";
         $this->reports        = $reports;
+        $this->showTemplate   = $showTemplate;
+        $this->listTemplate   = $listTemplate;
     }
 
     /**
@@ -126,6 +140,30 @@ class ReportGenerator
     public function getReportTypes()
     {
         return $this->reports;
+    }
+
+    /**
+     * Gets show template
+     *
+     * @return string
+     *
+     * @author r1pp3rj4ck <attila.bukor@gmail.com>
+     */
+    public function getShowTemplate()
+    {
+        return $this->showTemplate;
+    }
+
+    /**
+     * Gets list template
+     *
+     * @return string
+     *
+     * @author r1pp3rj4ck <attila.bukor@gmail.com>
+     */
+    public function getListTemplate()
+    {
+        return $this->listTemplate;
     }
 
     /**

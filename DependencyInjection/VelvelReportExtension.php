@@ -51,5 +51,7 @@ class VelvelReportExtension extends Extension
         $config        = $processor->processConfiguration($configuration, $configs);
 
         $container->setParameter('velvel.report.configuration.reports', $config['reports']);
+        $container->setParameter('velvel.report.configuration.show_template', $config['templates']['show']);
+        $container->setParameter('velvel.report.configuration.list_template', $config['templates']['list']);
     }
 }
