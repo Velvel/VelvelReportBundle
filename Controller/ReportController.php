@@ -61,6 +61,16 @@ class ReportController extends Controller
         $generator = $this->container->get('velvel.report.generator');
         $template  = $generator->getShowTemplate();
 
+        $reports = $generator->getReportTypes();
+
+        foreach ($reports as $key => $value) {
+            if ($key == $reportId) {
+                $report = $value;
+                $report['id'] = $key;
+                break;
+            }
+        }
+
         $query = $generator->getQuery($reportId);
 
         $form = $generator->getForm($reportId);
@@ -87,6 +97,7 @@ class ReportController extends Controller
         }
 
         return $this->render($template, array('form'   => $form->createView(),
-                                              'result' => $result));
+                                              'result' => $result,
+                                              'report' => $report));
     }
 }
