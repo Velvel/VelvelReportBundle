@@ -22,6 +22,18 @@ public function registerBundles {
         // ...
     );
 }
+
+```
+
+### Add the routing
+``` yml
+
+# app/config/routing.yml
+
+velvel_report:
+    resource: "@VelvelReportBundle/Resources/config/routing.xml"
+    prefix: /reports
+
 ```
 
 ## Usage
