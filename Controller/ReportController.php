@@ -89,9 +89,9 @@ class ReportController extends Controller
         $result = $query->getResult();
 
         foreach ($result as &$outer) {
-            foreach ($outer as $key => &$value) {
-                if (array_key_exists($key, $modifiers)) {
-                    $value = call_user_func_array(array($value, $modifiers[$key]['method']), $modifiers[$key]['params']);
+                foreach ($outer as $key => &$value) {
+                    if (array_key_exists($key, $modifiers) && $value) {
+                        $value = call_user_func_array(array($value, $modifiers[$key]['method']), $modifiers[$key]['params']);
                 }
             }
         }
