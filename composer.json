@@ -12,7 +12,6 @@
         "php": ">=5.3.3",
         "symfony/framework-bundle": ">=2.1.0",
         "symfony/form": "dev-master",
-        "symfony/validator": "dev-master",
         "doctrine/orm": ">=2.2.0",
         "twig/twig": "dev-master"
     },
