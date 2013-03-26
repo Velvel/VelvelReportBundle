@@ -62,7 +62,7 @@ class FormBuilder implements FormBuilderInterface
                 $formData[$key] = $value['value'];
             }
             if (isset($value['validation'])) {
-                $validationArray = $value['validation'];
+                $validationArray[$key] = $value['validation'];
             }
         }
         $validationConstraint = new Collection($validationArray);
