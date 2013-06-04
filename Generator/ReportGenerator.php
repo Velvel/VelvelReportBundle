@@ -20,6 +20,7 @@
 namespace Velvel\ReportBundle\Generator;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Velvel\ReportBundle\Form\FormBuilder;
 
 use Symfony\Component\DependencyInjection\Exception\RuntimeException;
@@ -35,6 +36,11 @@ class ReportGenerator
      * @var \Doctrine\ORM\EntityManager
      */
     private $entityManager;
+
+    /**
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     */
+    private $securityContext;
 
     /**
      * @var \Velvel\ReportBundle\Form\FormBuilder
@@ -72,14 +78,15 @@ class ReportGenerator
      *
      * @author r1pp3rj4ck <attila.bukor@gmail.com>
      */
-    public function __construct(EntityManager $entityManager, FormBuilder $formBuilder, array $reports, $showTemplate, $listTemplate)
+    public function __construct(EntityManager $entityManager, SecurityContextInterface $securityContext, FormBuilder $formBuilder, array $reports, $showTemplate, $listTemplate)
     {
-        $this->entityManager  = $entityManager;
-        $this->formBuilder    = $formBuilder;
-        $this->validInterface = "Velvel\\ReportBundle\\Builder\\ReportBuilderInterface";
-        $this->reports        = $reports;
-        $this->showTemplate   = $showTemplate;
-        $this->listTemplate   = $listTemplate;
+        $this->entityManager   = $entityManager;
+        $this->securityContext = $securityContext;
+        $this->formBuilder     = $formBuilder;
+        $this->validInterface  = "Velvel\\ReportBundle\\Builder\\ReportBuilderInterface";
+        $this->reports         = $reports;
+        $this->showTemplate    = $showTemplate;
+        $this->listTemplate    = $listTemplate;
     }
 
     /**
@@ -181,7 +188,7 @@ class ReportGenerator
         $className  = $this->reports[$reportId]['class'];
         $reflection = new \ReflectionClass($className);
         if ($reflection->implementsInterface($this->validInterface)) {
-            $builder = $reflection->newInstanceArgs(array($this->entityManager->createQueryBuilder()));
+            $builder = $reflection->newInstanceArgs(array($this->entityManager->createQueryBuilder(), $this->securityContext));
         }
         else {
             throw new RuntimeException(sprintf("ReportBuilders have to implement %s, and %s doesn't implement it", $this->validInterface, $className));
