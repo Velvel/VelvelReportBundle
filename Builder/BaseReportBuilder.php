@@ -20,6 +20,8 @@
 namespace Velvel\ReportBundle\Builder;
 
 use Velvel\ReportBundle\Builder\ReportBuilderInterface;
+use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Base report builder class to be extended for every report
@@ -35,6 +37,11 @@ abstract class BaseReportBuilder implements ReportBuilderInterface
     private $queryBuilder;
 
     /**
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     */
+    protected $securityContext;
+
+    /**
      * @var array
      */
     private $parameters;
@@ -48,14 +55,16 @@ abstract class BaseReportBuilder implements ReportBuilderInterface
      * Constructor
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Doctrine ORM Query builder
+     * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext Symfony Core Security Context
      *
      * @author r1pp3rj4ck <attila.bukor@gmail.com>
      */
-    public function __construct(\Doctrine\ORM\QueryBuilder $queryBuilder)
+    public function __construct(QueryBuilder $queryBuilder, SecurityContextInterface $securityContext)
     {
-        $this->queryBuilder = $queryBuilder;
-        $this->parameters   = $this->configureParameters();
-        $this->modifiers    = $this->configureModifiers();
+        $this->queryBuilder    = $queryBuilder;
+        $this->securityContext = $securityContext;
+        $this->parameters      = $this->configureParameters();
+        $this->modifiers       = $this->configureModifiers();
     }
 
     /**
@@ -120,7 +129,7 @@ abstract class BaseReportBuilder implements ReportBuilderInterface
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    abstract protected function configureBuilder(\Doctrine\ORM\QueryBuilder $queryBuilder);
+    abstract protected function configureBuilder(QueryBuilder $queryBuilder);
 
     /**
      * Configures query parameters

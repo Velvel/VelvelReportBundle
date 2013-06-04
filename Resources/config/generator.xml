@@ -7,6 +7,7 @@
     <services>
         <service id="velvel.report.generator" class="Velvel\ReportBundle\Generator\ReportGenerator">
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            <argument type="service" id="security.context"/>
             <argument type="service" id="velvel.report.form"/>
             <argument>%velvel.report.configuration.reports%</argument>
             <argument>%velvel.report.configuration.show_template%</argument>
