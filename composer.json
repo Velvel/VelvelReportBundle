@@ -12,7 +12,7 @@
         "php": ">=5.3.3",
         "symfony/framework-bundle": ">=2.1.0",
         "doctrine/orm": ">=2.2.0",
-        "twig/twig": "dev-master"
+        "twig/twig": ">=1.15.0"
     },
     "autoload": {
         "psr-0": { "Velvel\\ReportBundle": "" }
