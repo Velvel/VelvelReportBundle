@@ -76,7 +76,7 @@ class ReportController extends Controller
         $form = $generator->getForm($reportId);
 
         if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->bind($request);
 //            if ($form->isValid()) {
             $query->setParameters($form->getData());
 //            }
